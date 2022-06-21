@@ -7,9 +7,6 @@ const session = require("express-session");
 const passport = require('passport');
 const passportLocalMongoose = require("passport-local-mongoose")
 
-
-
-
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -19,9 +16,9 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost:27017/GroceryItemsDB");
 
 app.use(session({
-    secret : "the hades",
-    resave : false,
-    saveUninitialized : false
+    secret: "the hades",
+    resave: false,
+    saveUninitialized: false
 }));
 
 app.use(passport.initialize());   // check passport docs ( passportjs.org/docs )
@@ -55,74 +52,89 @@ const cartArr = [];
 let count_for_cart = 0;
 
 
-
 app.get("/", function (req, res) {
-    res.render("home");
+    if(req.isAuthenticated()){
+        res.render("home", {loginStatus : 1});
+    }
+    else{
+        res.render("home", {loginStatus : 0});
+    }
+    
 });
 
 
 app.get("/additem", function (req, res) {
-    res.render("additem");
+    if (req.isAuthenticated()) {
+        res.render("additem");
+    }
+    else {
+        res.redirect("/login");
+    }
+
 });
 
 app.get("/purchase", function (req, res) {
-    res.render("purchase");
+    if (req.isAuthenticated()) {
+        res.render("purchase");
+    }
+    else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/showitems", function (req, res) {
+    if (req.isAuthenticated()) {
 
-    Item.find({}, function (err, foundItem) {
-        if (err) {
-            console.log(err);
+        Item.find({}, function (err, foundItem) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                foundItem.forEach(function (item) {
+                    // console.log(item.title);
+                    const singleItem = {
+                        name: item.name,
+                        price: item.price,
+                        total_quantity: item.total_quantity
+                    };
+                    if (Arr.length === 0) {
+                        Arr.push(singleItem);
+                    }
+                    else {
+                        let count = 0;
+                        Arr.forEach(function (it) {
+                            if (it.name === singleItem.name) {
+                                // console.log("item already inserted");
+                            }
+                            else {
+                                count++;
+                            }
+                            if (count === Arr.length) {
+                                Arr.push(singleItem);
+                            }
+                        });
+                    }
+                });
+            }
+
+        });
+
+        if (count_for_showitems % 3 === 0) {
+            count_for_showitems++;
+            res.redirect("/showitems");
+        } else {
+            res.render("showitems", { itemsArr: Arr });
         }
-        else {
-            foundItem.forEach(function (item) {
-                // console.log(item.title);
-                const singleItem = {
-                    name: item.name,
-                    price: item.price,
-                    total_quantity: item.total_quantity
-                };
-                if (Arr.length === 0) {
-                    Arr.push(singleItem);
-                }
-                else {
-                    let count = 0;
-                    Arr.forEach(function (it) {
-                        if (it.name === singleItem.name) {
-                            // console.log("item already inserted");
-                        }
-                        else {
-                            count++;
-                        }
-                        if (count === Arr.length) {
-                            Arr.push(singleItem);
-                        }
-                    });
-                }
-            });
-        }
-
-    });
-
-    // Arr.forEach(function (item) {
-    //     console.log(item);
-    // })
-    // console.log(Arr.length
-    if (count_for_showitems % 3 === 0) {
-        count_for_showitems ++ ;
-        res.redirect("/showitems");
-    } else {
-        res.render("showitems", { itemsArr: Arr });
+        Arr = [];
     }
-    Arr = [];
-    console.log(count_for_showitems);
+    else {
+        res.redirect("/login");
+    }
+
 });
 
 
-
 app.post("/showitems/searched", function (req, res) {
-    // console.log(req.body.SearchItem);
     const searcArr = [];
     const itemName = _.toLower(req.body.SearchItem);
     Arr.forEach(function (item) {
@@ -134,18 +146,9 @@ app.post("/showitems/searched", function (req, res) {
             }
             searcArr.push(item);
         }
-
     });
-    // searcArr.forEach(function (item) {
-    //     console.log(item);
-    // })
-    // console.log(Arr.length)
     res.render("searchedItem", { itemsArr: searcArr });
 });
-
-
-
-
 
 
 app.get("/purchase/confirm", function (req, res) {
@@ -163,17 +166,9 @@ app.post("/purchase/confirm", function (req, res) {
         }
         else {
             if (foundedItem) {
-                // console.log(foundedItem.name);
-                // const searchedItem = {
-                //     name: foundedItem.name,
-                //     price: foundedItem.price,
-                //     total_quantity: foundedItem.total_quantity
-                // }                
-                // searchArr2.push(foundedItem);
                 itemName = foundedItem.name;
                 itemPrice = foundedItem.price;
                 itemQnt = foundedItem.total_quantity;
-                // console.log(itemName + itemPrice + itemQnt);
                 res.render("confirm", { Name: itemName, Price: itemPrice, Qnt: itemQnt });
             }
         }
@@ -185,36 +180,41 @@ app.post("/purchase/confirm", function (req, res) {
 //______________ ADD ITEM______________________________beginig
 
 app.post("/additem", function (req, res) {
-    const itemName = _.toLower(req.body.name);
-    Item.findOne({ name: itemName }, function (err, foundedItem) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            if (foundedItem) {
-                const qnt = Number(req.body.quantity) + Number(foundedItem.total_quantity);
 
-                Item.updateOne({ name: itemName }, { price: req.body.price, total_quantity: qnt }, function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    else {
-                        res.redirect("/");
-                        // alert("item not found");
-                    }
-                });
+    if (req.isAuthenticated()) {
+        const itemName = _.toLower(req.body.name);
+        Item.findOne({ name: itemName }, function (err, foundedItem) {
+            if (err) {
+                console.log(err);
             }
             else {
-                const newItem = new Item({
-                    name: itemName,
-                    price: req.body.price,
-                    total_quantity: req.body.quantity
-                });
-                newItem.save();
-                res.redirect("/");
+                if (foundedItem) {
+                    const qnt = Number(req.body.quantity) + Number(foundedItem.total_quantity);
+
+                    Item.updateOne({ name: itemName }, { price: req.body.price, total_quantity: qnt }, function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            res.redirect("/");
+                        }
+                    });
+                }
+                else {
+                    const newItem = new Item({
+                        name: itemName,
+                        price: req.body.price,
+                        total_quantity: req.body.quantity
+                    });
+                    newItem.save();
+                    res.redirect("/");
+                }
             }
-        }
-    })
+        })
+    }
+    else {
+        res.redirect("/login");
+    }
 });
 //______________ ADD ITEM______________________________end
 
@@ -230,12 +230,12 @@ const Cart = mongoose.model("cartitem", cardShema);
 
 
 app.post("/addedtocart", function (req, res) {
+
     const cartItemName = _.toLower(req.body.cartname);
     const cartItemQnt = req.body.cartqnt;
     const subTotal = req.body.cartprice;
     const cartItemPrice = Number(req.body.cartprice) / Number(req.body.cartqnt);
-    // console.log(cartItemPrice);
-    // console.log(cartItemQnt);
+
     Cart.findOne({ name: cartItemName }, function (err, foundedItem) {
         if (err) {
             console.log(err);
@@ -247,10 +247,6 @@ app.post("/addedtocart", function (req, res) {
                     if (err) {
                         console.log(err);
                     }
-                    // else {
-                    //     res.redirect("/purchase");
-                    //     // alert("item not found");
-                    // }
                 });
             }
             else {
@@ -273,74 +269,67 @@ app.post("/addedtocart", function (req, res) {
 
 app.get("/cart", function (req, res) {
 
-   
-            Cart.find({}, function (err, foundItem) {
-                if (err) {
-                    console.log(err);
+    if (req.isAuthenticated()) {
+        Cart.find({}, function (err, foundItem) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                foundItem.forEach(function (item) {
+                    const singleItem = {
+                        name: item.name,
+                        price: item.price,
+                        total_quantity: item.total_quantity,
+                        subtotal: item.subtotal
+                    };
+                    if (cartArr.length === 0) {
+                        cartArr.push(singleItem);
+                    }
+                    else {
+                        let count = 0;
+                        cartArr.forEach(function (it) {
+                            if (it.name === singleItem.name) {
+                                // console.log("item already inserted");
+                            }
+                            else {
+                                count++;
+                            }
+                            if (count === cartArr.length) {
+                                cartArr.push(singleItem);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        Cart.count({}, function (err, items) {
+            if (!err) {
+                console.log(items);
+                if (items > 0) {
+                    if (count_for_cart === 0) {
+                        count_for_cart++;
+                        res.redirect("/cart");
+                    } else {
+                        res.render("cartitems", { itemsArr: cartArr, TOTAL: grandTotal });
+                    }
                 }
                 else {
-                    foundItem.forEach(function (item) {
-                        // console.log(item.title);
-                        const singleItem = {
-                            name: item.name,
-                            price: item.price,
-                            total_quantity: item.total_quantity,
-                            subtotal: item.subtotal
-                        };
-                        if (cartArr.length === 0) {
-                            cartArr.push(singleItem);
-                        }
-                        else {
-                            let count = 0;
-                            cartArr.forEach(function (it) {
-                                if (it.name === singleItem.name) {
-                                    // console.log("item already inserted");
-                                }
-                                else {
-                                    count++;
-                                }
-                                if (count === cartArr.length) {
-                                    cartArr.push(singleItem);
-                                }
-                            });
-                        }
-                    });
+                    // for empty cart
+                    const a = [];
+                    const b = 0;
+                    res.render("cartitems", { itemsArr: a, TOTAL: b });
                 }
-        
-            });
-    
-    
-    Cart.count({}, function(err, items){
-        if(!err){
-            console.log(items);
-            if(items > 0 ){
-                if (count_for_cart === 0) {
-                    count_for_cart++;
-                    res.redirect("/cart");
-                } else {
-            
-                    res.render("cartitems", { itemsArr: cartArr, TOTAL: grandTotal });
-                }
-
-        }
-        else{
-            // for empty cart
-            const a = [];
-            const b = 0;
-            res.render("cartitems",{itemsArr : a,TOTAL : b });
-        }
+            }
+        });
+        let grandTotal = 0;
+        cartArr.forEach(function (item) {
+            grandTotal = grandTotal + item.subtotal;
+        });
     }
-    });
-    // Arr.forEach(function (item) {
-    //     console.log(item);
-    // })
-    // console.log(Arr.length
-    let grandTotal = 0;
-    cartArr.forEach(function (item) {
-        grandTotal = grandTotal + item.subtotal;
-    });
-
-  
+    else {
+        res.redirect("/login");
+    }
 });
 
 //______________  CART______________________________end
@@ -348,86 +337,65 @@ app.get("/cart", function (req, res) {
 //______________ CHECKOUT______________________________beginig
 
 app.post("/checkout", function (req, res) {
-
-    const checkoutArr = [];
-    Cart.find({}, function (err, foundItem) {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            foundItem.forEach(function (item) {
-                const singleItem = {
-                    name: item.name,
-                    price: item.price,
-                    total_quantity: item.total_quantity,
-                    subtotal: item.subtotal
-                };
-                checkoutArr.push(singleItem);
-                // if (checkoutArr.length === 0) {
-                // }
-                // else {
-                //     let cnt = 0;
-                //     checkoutArr.forEach(function (it) {
-                //         if (it.name === singleItem.name) {
-                //             // console.log("item already inserted");
-                //         }
-                //         else {
-                //             cnt++;
-                //         }
-                //         if (cnt === checkoutArr.length) {
-                //             checkoutArr.push(singleItem);
-                //         }
-                //     });
-                // }
-            });
-// all the item in cart collection is pushed to checkoutArr
-
-            // checkoutArr.forEach(function (item) {
-            //     console.log(item);
-            // });
-
-
-            Item.find({}, function (err, foundItem) {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    foundItem.forEach(function (item) {
-                        checkoutArr.forEach(function(itm){
-                            if(item.name === itm.name){
-                                Item.findOne({name : itm.name}, function(err,foundedItem){
-                                    if(err){
-                                        console.log(err);
-                                    }
-                                    else{
-                                        let remainingQnt = Number(foundedItem.total_quantity) - itm.total_quantity;
-                                        if(remainingQnt < 0){
-                                            remainingQnt = 0;
+    if (req.isAuthenticated()) {
+        const checkoutArr = [];
+        Cart.find({}, function (err, foundItem) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                foundItem.forEach(function (item) {
+                    const singleItem = {
+                        name: item.name,
+                        price: item.price,
+                        total_quantity: item.total_quantity,
+                        subtotal: item.subtotal
+                    };
+                    checkoutArr.push(singleItem);
+                });
+               
+                Item.find({}, function (err, foundItem) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        foundItem.forEach(function (item) {
+                            checkoutArr.forEach(function (itm) {
+                                if (item.name === itm.name) {
+                                    Item.findOne({ name: itm.name }, function (err, foundedItem) {
+                                        if (err) {
+                                            console.log(err);
                                         }
-                                        Item.updateOne({name : foundedItem.name},{total_quantity : remainingQnt}, function(err){
-                                            if(err){
-                                                console.log(err);
+                                        else {
+                                            let remainingQnt = Number(foundedItem.total_quantity) - itm.total_quantity;
+                                            if (remainingQnt < 0) {
+                                                remainingQnt = 0;
                                             }
-                                        });
-                                    }
-                                });
-                            }
+                                            Item.updateOne({ name: foundedItem.name }, { total_quantity: remainingQnt }, function (err) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            })
                         })
-                    })
-                }
-            });
+                    }
+                });
+            }
+        });
 
-  
-        }
-    });
-    
-    Cart.deleteMany({}, function(err){   // deletig all item from cart
-        if(err){
-            console.log(err);
-        }
-    });
-    res.redirect("/");
-    
+        Cart.deleteMany({}, function (err) {   // deletig all item from cart
+            if (err) {
+                console.log(err);
+            }
+        });
+        res.redirect("/");
+    }
+    else {
+        res.redirect("/login");
+    }
 });
 
 
@@ -440,50 +408,63 @@ app.get("/login", function (req, res) {
 });
 
 
-app.get("/register",function (req, res) { 
+app.get("/register", function (req, res) {
     res.render("register")
 });
 
 
 app.post("/register", function (req, res) {
     //https://www.npmjs.com/package/passport-local-mongoose for docs
-  
-    User.register({username : req.body.username}, req.body.password, function (err, user) { 
-        if(err){
+
+    User.register({ username: req.body.username }, req.body.password, function (err, user) {
+        if (err) {
             console.log(err);
             res.redirect("/register");
         }
-        
-            passport.authenticate("local")( req, res, function () { 
-                  res.redirect("/login");
-                  // res.render("secrets");
-            });
-     })
+
+        passport.authenticate("local")(req, res, function () {
+            res.redirect("/login");
+            // res.render("secrets");
+        });
+    })
 });
 
 app.post("/login", function (req, res) {
 
     const theUser = new User({
-        username : req.body.username,
-        password : req.body.password
+        username: req.body.username,
+        password: req.body.password
     })
 
-    req.logIn(theUser, function (err) {  
-        if(err){
+    req.logIn(theUser, function (err) {
+        if (err) {
             console.log(err);
             res.redirect("/login");
         }
-        else{
-            passport.authenticate("local", { failureRedirect: '/login' })( req, res, function (err, found) { 
+        else {
+            passport.authenticate("local", { failureRedirect: '/login' })(req, res, function (err, found) {
                 res.redirect("/");
-           });
+            });
         }
-     })
-   
+    })
+
 });
 
 
+app.get("/logout", function (req, res) {
+    req.logOut(function (err) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.redirect("/");
+        }
+    });
+
+});
+
 // _________________________atuhentication_________________end
+
 
 
 app.listen(3000, function () {

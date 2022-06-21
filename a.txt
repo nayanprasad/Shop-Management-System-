@@ -426,3 +426,26 @@ app.post("/checkout", function (req, res) {
 app.listen(3000, function () {
     console.log("Server started on port 3000");
 });
+
+
+***********************************************************
+
+   <% if(loginStatus  == 1){ %>
+          <form class="d-flex">
+            <a href="/logout">
+            <button class="btn btn-outline-dark btn-home" type="button">
+            logout           
+            </button>
+          </a>
+          </form>
+          <% }else{ %>
+            <form class="d-flex">
+              <a href="/login">
+              <button class="btn btn-outline-dark btn-home" type="button">
+              login           
+              </button>
+            </a>
+            </form>
+            <% } %>
+
+            
