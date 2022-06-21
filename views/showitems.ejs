@@ -1,0 +1,55 @@
+<%- include("partials/header") %>
+
+  <form action="/showitems/searched" method="post">
+    <div class="purchase-main">
+      <div class="input-group">
+        <input name="SearchItem" type="text" class="form-control" placeholder="Search for items">
+        <div class="input-group-append">
+          <button class="btn btn-secondary btn-purchase" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Remaing</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <% itemsArr.forEach(function(item){ %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <%=item.name %>
+          </td>
+          <td>
+            <%=item.price %>
+              
+          </td>
+          <td>
+            <%=item.total_quantity %>
+        <% }) %>
+
+
+    </tbody>
+  </table>
+
+  
+
+  <%- include("partials/footer") %>

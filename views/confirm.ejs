@@ -1,0 +1,62 @@
+<%- include("partials/header") %>
+
+    <form action="/addedtocart" method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Remaing</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <%= Name %>
+                        <input type="hidden" name="cartname" value="<%= Name %>">
+                    </td>
+                    <td>
+                        <%= Price %>
+                            <input type="hidden" id="ppprice" value="<%= Price %>">
+
+                    </td>
+                    <td>
+                        <%= Qnt %>
+                    </td>
+                    <td>
+                        <input id="purchase-input-qnt" name = "cartqnt" type="number" min="0" max="<%= Qnt %>"
+                            onchange="handleOnChange(this)">
+                    </td>
+                    <td>
+                        <input id="purchase-input-price" name = "cartprice" type text="text" onKeyDown="return false">
+                    </td>
+
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-secondary">
+            ADD CART
+        </button>
+        <a  href="/purchase">
+        <button type="button" class="btn btn-secondary" onclick="">
+            BACK
+        </button>
+    </a>
+    </form>
+
+
+ 
+
+    <script type="text/javascript">
+        
+
+        function handleOnChange(input) {
+
+            let x = document.getElementById('purchase-input-price');
+            x.value = input.value * document.getElementById('ppprice').value;
+        }
+
+    </script>
+
+    <%- include("partials/footer") %>

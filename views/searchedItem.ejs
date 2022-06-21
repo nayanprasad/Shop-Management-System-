@@ -1,0 +1,40 @@
+<%- include("partials/header") %>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Remaing</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <% itemsArr.forEach(function(item){ %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <%=item.name %>
+          </td>
+          <td>
+            <%=item.price %>
+              
+          </td>
+          <td>
+            <%=item.total_quantity %>
+        <% }) %>
+
+
+    </tbody>
+  </table>
+
+  <%- include("partials/footer") %>

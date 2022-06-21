@@ -1,0 +1,62 @@
+<%- include('partials/header') %>
+
+<style>
+  html,
+  body {
+      height: 100%;
+  }
+
+  body {
+      text-align: center;
+      padding-left: 500px;
+      display: flex;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background-color: #f5f5f5;
+  }
+
+  .form-signin {
+      max-width: 330px;
+      padding: 15px;
+  }
+
+  .form-signin .form-floating:focus-within {
+      z-index: 2;
+  }
+
+  .form-signin input[type="email"] {
+      margin-bottom: -1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+  }
+
+  .form-signin input[type="password"] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+  }
+</style>
+<main class="form-signin">
+  <form action="/additem" method="post">
+      <h1 class="h3 mb-3 fw-normal">ADD ITEM</h1>
+      <div class="form-floating">
+          <input name="name" type="text" class="form-control" placeholder="item name" required>
+          <label for="floatingPassword">ItemName</label>
+      </div>
+      <div class="form-floating">
+          <input name="price" type="number" class="form-control" placeholder="price" required>
+          <label for="floatingPassword">Price</label>
+      </div>
+      <div class="form-floating">
+          <input name="quantity" type="number" class="form-control" placeholder="Quantity" required>
+          <label for="floatingInput">Quantity</label>
+      </div>
+      <br>
+      <button class="w-100 btn btn-lg btn-dark" type="submit">Add item</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+  </form>
+</main>
+
+
+ <%- include('partials/footer') %>

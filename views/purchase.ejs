@@ -1,0 +1,33 @@
+<%- include("partials/header") %>
+
+  <form action="/purchase/confirm" method="post">
+    <div class="purchase-main">
+      <div class="input-group">
+        <input name="SearchItemP" type="text" class="form-control" placeholder="Search for items to purchase">
+        <div class="input-group-append">
+          <button class="btn btn-secondary btn-purchase" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class = "caricon-purchase">
+    <a href="http://localhost:3000/showitems">
+      <button class="btn btn-outline-dark btn-purchase-icons" type="button">
+       <p> <strong>SHOW ITEMS</strong>  </p>              
+       <i class="fa-solid fa-clipboard-list fa-2x"></i>
+      </button>
+    </a>
+    <a href="http://localhost:3000/cart">
+      <button class="btn btn-outline-dark btn-purchase-icons" type="button">
+       <p> <strong>GO TO CART</strong>  </p>              
+        <i class="fa-solid fa-cart-shopping fa-2x"></i>
+      </button>
+    </a>
+  </div>
+
+
+
+  <%- include("partials/footer") %>

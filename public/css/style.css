@@ -1,0 +1,46 @@
+.purchase-main {
+    width: 50%;
+    margin: 50px auto;
+}
+
+/* Bootstrap 4 text input with search icon */
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.btn-purchase{
+    width: 100px;
+}
+
+#purchase-input-qnt{
+    max-width: 70px;
+}
+
+#purchase-input-price{
+    max-width: 150px;
+}
+
+.caricon-purchase{
+    text-align: center;
+}
+
+.btn-purchase-icons{
+    margin: auto 50px auto 50px;
+}
+
+.btn-home{
+    margin: auto 10px;
+}
