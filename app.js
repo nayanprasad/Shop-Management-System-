@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const _ = require("lodash");
 const session = require("express-session");
 const passport = require('passport');
-const passportLocalMongoose = require("passport-local-mongoose")
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const app = express();
 
@@ -16,7 +16,8 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://localhost:27017/GroceryItemsDB");
 
 app.use(session({
-    secret: "the hades",
+    secret: "ItsMeHADEeS",
+    // secret: process.env.SECRETE,
     resave: false,
     saveUninitialized: false
 }));
@@ -147,7 +148,13 @@ app.post("/showitems/searched", function (req, res) {
             searcArr.push(item);
         }
     });
-    res.render("searchedItem", { itemsArr: searcArr });
+    if(searcArr.length === 0){
+        res.render("emptysearch");
+    }
+    else{
+        res.render("searchedItem", { itemsArr: searcArr });
+    }
+   
 });
 
 
@@ -305,7 +312,7 @@ app.get("/cart", function (req, res) {
 
         Cart.count({}, function (err, items) {
             if (!err) {
-                console.log(items);
+                // console.log(items);
                 if (items > 0) {
                     if (count_for_cart === 0) {
                         count_for_cart++;
@@ -318,7 +325,8 @@ app.get("/cart", function (req, res) {
                     // for empty cart
                     const a = [];
                     const b = 0;
-                    res.render("cartitems", { itemsArr: a, TOTAL: b });
+                    // res.render("cartitems", { itemsArr: a, TOTAL: b });
+                    res.render("emptycart");
                 }
             }
         });

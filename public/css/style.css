@@ -44,3 +44,12 @@
 .btn-home{
     margin: auto 10px;
 }
+
+.empty-cart-cls{
+    padding-top: 200px;
+    text-align: center;
+}
+
+.empty-cart-cls img{
+    width: 100px;
+}
