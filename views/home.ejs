@@ -1,67 +1,73 @@
 <%- include('partials/header') %>
+  <style>
+    .navbar-text {
+      font-size: 60px;
+    }
+  </style>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container px-4 px-lg-5">
-      <a class="navbar-brand" href="/">BRAND</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <div class=" container px-10 px-lg-15">
+      <a class="navbar-brand" href="/">SHOP in STYLE</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
           class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <ul class="navbar-nav me-auto mb-4 mb-lg-0 ms-lg-8">
           <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+
           <li class="nav-item"><a class="nav-link" href="/showitems">Show Items</a></li>
+          <li class="nav-item"><a class="nav-link" href="/deleteitems">Delete Items</a></li>
           <li class="nav-item"><a class="nav-link" href="/additem">Add Items</a></li>
           <li class="nav-item"><a class="nav-link" href="/purchase">Purchase</a></li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">Shop</a>
+              aria-expanded="false">Contact Us</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#!">All Products</a></li>
+              <li><a class="dropdown-item" href="#!">Mob:8078160371</a></li>
               <li>
                 <hr class="dropdown-divider" />
               </li>
-              <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-              <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+              <li>
+                <a class="dropdown-item" href="mailto:nayanprasad096@mail.com">Mail:nayanprasad096@gmail.com</a>              </li>
             </ul>
           </li>
         </ul>
         <form class="d-flex">
           <a href="/cart">
-          <button class="btn btn-outline-dark btn-home" type="button">
-            Cart
-            <i class="fa-solid fa-cart-shopping nox"></i>
-            <!-- <span class="badge bg-dark text-white ms-1 rounded-pill">0</span> -->
-          </button>
-        </a>
-        </form>
-       
-        <% if(loginStatus  == 1){ %>
-          <form class="d-flex">
-            <a href="/logout">
             <button class="btn btn-outline-dark btn-home" type="button">
-            logout           
+              Cart
+              <i class="fa-solid fa-cart-shopping nox"></i>
+              <!-- <span class="badge bg-dark text-white ms-1 rounded-pill">0</span> -->
             </button>
           </a>
+        </form>
+
+        <% if(loginStatus==1){ %>
+          <form class="d-flex">
+            <a href="/logout">
+              <button class="btn btn-outline-dark btn-home" type="button">
+                logout
+              </button>
+            </a>
           </form>
           <% }else{ %>
             <form class="d-flex">
               <a href="/login">
-              <button class="btn btn-outline-dark btn-home" type="button">
-              login           
-              </button>
-            </a>
+                <button class="btn btn-outline-dark btn-home" type="button">
+                  login
+                </button>
+              </a>
             </form>
             <% } %>
-      
+
       </div>
     </div>
   </nav>
-  <!-- Header-->
+  <!-- Header--> <a href=""></a>
   <header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
+    <div class="container px-60 px-lg-50 my-5">
       <div class="text-center text-white">
-        <h1 class="display-4 fw-bolder">Shop in style</h1>
+        <h1 class="display-4 fw-bolder">SHOP IN STYLE</h1>
         <p class="lead fw-normal text-white-50 mb-0">With Our Shop</p>
       </div>
     </div>
@@ -73,20 +79,18 @@
         <div class="col mb-5">
           <div class="card h-100">
             <!-- Product image-->
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+            <img class="card-img-top" src="images/jeerakashala.jpg" alt="..." />
             <!-- Product details-->
             <div class="card-body p-4">
               <div class="text-center">
                 <!-- Product name-->
-                <h5 class="fw-bolder">Fancy Product</h5>
+                <h5 class="fw-bolder">JEERAKASHALA</h5>
                 <!-- Product price-->
-                $40.00 - $80.00
+                50% OFF
               </div>
             </div>
             <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-            </div>
+
           </div>
         </div>
         <div class="col mb-5">
@@ -94,12 +98,61 @@
             <!-- Sale badge-->
             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
             <!-- Product image-->
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+            <img class="card-img-top" src="images/ponni.jpg" alt="..." />
             <!-- Product details-->
             <div class="card-body p-4">
               <div class="text-center">
                 <!-- Product name-->
-                <h5 class="fw-bolder">Special Item</h5>
+                <h5 class="fw-bolder">PONNI</h5>
+                <!-- Product reviews-->
+                <div class="d-flex justify-content-center small text-warning mb-2">
+                  <div class="bi-star-fill"></div>
+                  <div class="bi-star-fill"></div>
+                  <div class="bi-star-fill"></div>
+                  <div class="bi-star-fill"></div>
+                  <div class="bi-star-fill"></div>
+                </div>
+
+                <!-- Product price-->
+                <span class="text-muted text-decoration-line-through">₹20.00</span>
+                ₹18.00
+              </div>
+            </div>
+            <!-- Product actions-->
+
+          </div>
+        </div>
+        <div class="col mb-5">
+          <div class="card h-100">
+            <!-- Sale badge-->
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+            <!-- Product image-->
+            <img class="card-img-top"
+              src="images/india-gate-select-basmati-rice-1-kg-product-images-o491469552-p491469552-1-202203170914.jpg"
+              alt="..." />
+            <!-- Product details-->
+            <div class="card-body p-4">
+              <div class="text-center">
+                <!-- Product name-->
+                <h5 class="fw-bolder">INDIA GATE</h5>
+                <!-- Product price-->
+                <span class="text-muted text-decoration-line-through">₹50.00</span>
+                ₹25.00
+              </div>
+            </div>
+            <!-- Product actions-->
+
+          </div>
+        </div>
+        <div class="col mb-5">
+          <div class="card h-100">
+            <!-- Product image-->
+            <img class="card-img-top" src="images/40169054_2-pavizham-long-grain-matta-rice.jpg" alt="..." />
+            <!-- Product details-->
+            <div class="card-body p-4">
+              <div class="text-center">
+                <!-- Product name-->
+                <h5 class="fw-bolder">POPULAR ITEM</h5>
                 <!-- Product reviews-->
                 <div class="d-flex justify-content-center small text-warning mb-2">
                   <div class="bi-star-fill"></div>
@@ -109,14 +162,11 @@
                   <div class="bi-star-fill"></div>
                 </div>
                 <!-- Product price-->
-                <span class="text-muted text-decoration-line-through">$20.00</span>
-                $18.00
+                ₹40.00
               </div>
             </div>
             <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-            </div>
+
           </div>
         </div>
         <div class="col mb-5">
@@ -124,32 +174,49 @@
             <!-- Sale badge-->
             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
             <!-- Product image-->
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+            <img class="card-img-top" src="images/mulayari.jpg" alt="..." />
             <!-- Product details-->
             <div class="card-body p-4">
               <div class="text-center">
                 <!-- Product name-->
-                <h5 class="fw-bolder">Sale Item</h5>
+                <h5 class="fw-bolder">SALE ITEM</h5>
                 <!-- Product price-->
-                <span class="text-muted text-decoration-line-through">$50.00</span>
-                $25.00
+                <span class="text-muted text-decoration-line-through">₹75.00</span>
+                ₹55.00
               </div>
             </div>
             <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-            </div>
+
           </div>
         </div>
         <div class="col mb-5">
           <div class="card h-100">
             <!-- Product image-->
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+            <img class="card-img-top" src="images/chilli powder.jpg" alt="..." />
             <!-- Product details-->
             <div class="card-body p-4">
               <div class="text-center">
                 <!-- Product name-->
-                <h5 class="fw-bolder">Popular Item</h5>
+                <h5 class="fw-bolder">MTR CHILLI POWDER</h5>
+                <!-- Product price-->
+                ₹20.00 - ₹50.00
+              </div>
+            </div>
+            <!-- Product actions-->
+
+          </div>
+        </div>
+        <div class="col mb-5">
+          <div class="card h-100">
+            <!-- Sale badge-->
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+            <!-- Product image-->
+            <img class="card-img-top" src="images/kuruva.jpg" alt="..." />
+            <!-- Product details-->
+            <div class="card-body p-4">
+              <div class="text-center">
+                <!-- Product name-->
+                <h5 class="fw-bolder">KURUVA</h5>
                 <!-- Product reviews-->
                 <div class="d-flex justify-content-center small text-warning mb-2">
                   <div class="bi-star-fill"></div>
@@ -159,67 +226,23 @@
                   <div class="bi-star-fill"></div>
                 </div>
                 <!-- Product price-->
-                $40.00
+                <span class="text-muted text-decoration-line-through">₹50.00</span>
+                ₹38.00
               </div>
             </div>
             <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-5">
-          <div class="card h-100">
-            <!-- Sale badge-->
-            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-            <!-- Product image-->
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <h5 class="fw-bolder">Sale Item</h5>
-                <!-- Product price-->
-                <span class="text-muted text-decoration-line-through">$50.00</span>
-                $25.00
-              </div>
-            </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-            </div>
+
           </div>
         </div>
         <div class="col mb-5">
           <div class="card h-100">
             <!-- Product image-->
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+            <img class="card-img-top" src="images/podi ari.jpg" alt="..." />
             <!-- Product details-->
             <div class="card-body p-4">
               <div class="text-center">
                 <!-- Product name-->
-                <h5 class="fw-bolder">Fancy Product</h5>
-                <!-- Product price-->
-                $120.00 - $280.00
-              </div>
-            </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-5">
-          <div class="card h-100">
-            <!-- Sale badge-->
-            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-            <!-- Product image-->
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <h5 class="fw-bolder">Special Item</h5>
+                <h5 class="fw-bolder">PODI ARI</h5>
                 <!-- Product reviews-->
                 <div class="d-flex justify-content-center small text-warning mb-2">
                   <div class="bi-star-fill"></div>
@@ -229,41 +252,11 @@
                   <div class="bi-star-fill"></div>
                 </div>
                 <!-- Product price-->
-                <span class="text-muted text-decoration-line-through">$20.00</span>
-                $18.00
+                ₹40.00
               </div>
             </div>
             <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col mb-5">
-          <div class="card h-100">
-            <!-- Product image-->
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <h5 class="fw-bolder">Popular Item</h5>
-                <!-- Product reviews-->
-                <div class="d-flex justify-content-center small text-warning mb-2">
-                  <div class="bi-star-fill"></div>
-                  <div class="bi-star-fill"></div>
-                  <div class="bi-star-fill"></div>
-                  <div class="bi-star-fill"></div>
-                  <div class="bi-star-fill"></div>
-                </div>
-                <!-- Product price-->
-                $40.00
-              </div>
-            </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -272,7 +265,7 @@
   <!-- Footer-->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy;  2022</p>
+      <p class="m-0 text-center text-white">Copyright &copy; Shop in Style </p>
     </div>
   </footer>
   <!-- Bootstrap core JS-->

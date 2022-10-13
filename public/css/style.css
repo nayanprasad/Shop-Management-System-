@@ -2,6 +2,10 @@
     width: 50%;
     margin: 50px auto;
 }
+body {
+    font-family: "arial", Times, serif;
+  }
+  
 
 /* Bootstrap 4 text input with search icon */
 
